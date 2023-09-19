@@ -3,9 +3,10 @@ import Link from "next/link";
 import { api } from "~/utils/api";
 import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 export default function Home() {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
+
 
   const user = useUser()
+  const { data } = api.movie.getAll.useQuery()
   return (
     <>
       <Head>
@@ -23,9 +24,9 @@ export default function Home() {
             {!user.isSignedIn && <SignInButton />}
 
           </div>
-          <p className="text-2xl text-white">
-            {hello.data ? hello.data.greeting : "Loading tRPC query..."}
-          </p>
+          <div>
+            {data?.map((movie) => (<div key={movie.id}>{movie.content}</div>))}
+          </div>
         </div>
       </main>
     </>

@@ -13,9 +13,12 @@ generator client {
 }
 
 
-
-model Example {
+model Movie {
     id        String   @id @default(cuid())
     createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+
+    content   String   @db.VarChar(255)
+    userId String
+
+    @@index([userId])
 }
